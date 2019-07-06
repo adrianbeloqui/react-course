@@ -1,1 +1,1 @@
-# react_course
+# Code from React course
