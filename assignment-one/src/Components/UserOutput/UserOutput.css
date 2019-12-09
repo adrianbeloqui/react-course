@@ -1,0 +1,12 @@
+.UserOutput {
+    border: 1px solid gray;
+    box-shadow: 5px 2px 4px 1px lightslategray;
+    margin: 20px auto;
+    width: 50%;
+}
+
+.UserOutput p:first-child {
+    font-weight: bold;
+    text-align: left;
+    padding-left: 15px;
+}
