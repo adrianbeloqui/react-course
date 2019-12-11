@@ -8,7 +8,8 @@ class App extends Component {
         { name: "Max", age: 28},
         { name: "Manu", age: 26},
         { name: "Sophia", age: 22}
-      ]
+      ],
+      showPersons: false
   }
 
   switchNameHandler = (newName) => {
@@ -33,6 +34,11 @@ class App extends Component {
     })
   }
 
+  togglePersonshandler = () => {
+    const doesShow = this.state.showPersons;
+    this.setState({showPersons: !doesShow});
+  }
+
   // onClick={ () => this.switchNameHandler('Maximilian') } syntax can
   // be very inefficient, it is preferred to use the bind mechanism.
 
@@ -45,23 +51,32 @@ class App extends Component {
       cursor: 'pointer'
     }
 
+    let persons = null;
+    if (this.state.showPersons) {
+      persons = (
+        <div>
+          <Person
+            name={ this.state.persons[0].name }
+            age={ this.state.persons[0].age } />
+          <Person
+            name={ this.state.persons[1].name }
+            age={ this.state.persons[1].age } 
+            click={ this.switchNameHandler.bind(this, "Max!") } 
+            change={ this.nameChangedHandler } >My Hobbies: Racing</Person>
+          <Person
+            name={ this.state.persons[2].name }
+            age={ this.state.persons[2].age } />
+        </div>
+      );
+    }
+
     return (
       <div className="App">
         <h1>Hi, I'm a React App</h1>
         <button 
           style={ style }
-          onClick={ () => this.switchNameHandler('Maximilian') }>Switch Name</button>
-        <Person
-          name={ this.state.persons[0].name }
-          age={ this.state.persons[0].age } />
-        <Person
-          name={ this.state.persons[1].name }
-          age={ this.state.persons[1].age } 
-          click={ this.switchNameHandler.bind(this, "Max!") } 
-          change={ this.nameChangedHandler } >My Hobbies: Racing</Person>
-        <Person
-          name={ this.state.persons[2].name }
-          age={ this.state.persons[2].age } />
+          onClick={ this.togglePersonshandler }>Toggle Persons</button>
+        { persons }
       </div>
     );
     // return React.createElement('div', {className: 'App'}, React.createElement('p', null, null));
