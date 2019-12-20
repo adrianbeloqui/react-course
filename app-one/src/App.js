@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import Person from './Components/Person/Person';
 import styled from 'styled-components';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 const StyledButton = styled.button`
     background-color: ${props => props.alt ? 'red' : 'green'};
@@ -85,12 +86,13 @@ class App extends Component {
               // it is more efficient to set a unique key to each
               // element
               return (
-                <Person
-                  click={ this.deletePersonHandler.bind(this, index) }
-                  change={ (event) => this.nameChangedHandler(event, person.id) }
-                  name={ person.name }
-                  age={ person.age }
-                  key={ person.id }/>
+                <ErrorBoundary key={ person.id }>
+                  <Person
+                    click={ this.deletePersonHandler.bind(this, index) }
+                    change={ (event) => this.nameChangedHandler(event, person.id) }
+                    name={ person.name }
+                    age={ person.age }/>
+                </ErrorBoundary>
               )
           }) }
         </div>
