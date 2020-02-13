@@ -1,6 +1,7 @@
 import React from 'react'
-//import classes from './Person.module.css'
+import classes from './Person.module.css'
 import Aux from '../../Hoc/Aux'
+import withClass from '../../Hoc/withClass'
 
 const person = (props) => {
     return (
@@ -12,4 +13,4 @@ const person = (props) => {
     )
 }
 
-export default person;
+export default withClass(person, classes.Person);
