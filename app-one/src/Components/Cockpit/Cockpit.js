@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import classes from './Cockpit.module.css'
+import AuthContext from '../../Context/auth-context'
 
 
 const StyledButton = styled.button`
@@ -38,9 +39,13 @@ const cockpit = ( props ) => {
                 onClick={ props.clicked }>
                     Toggle Persons
             </StyledButton>
-            <StyledButton onClick={props.login}>
-                Log in
-            </StyledButton>
+            <AuthContext.Consumer>
+                {(context) => (
+                    <StyledButton onClick={context.login}>
+                        Log in
+                    </StyledButton>
+                )}
+            </AuthContext.Consumer>
         </div>
     )
 }

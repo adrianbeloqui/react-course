@@ -4,6 +4,7 @@ import Persons from '../Components/Persons/Persons';
 import Cockpit from '../Components/Cockpit/Cockpit'
 import withClass from '../Components/Hoc/withClass'
 import Aux from '../Components/Hoc/Aux'
+import AuthContext from '../Context/auth-context'
 
 class App extends Component {
   state = {
@@ -73,14 +74,19 @@ class App extends Component {
 
     return (
       <Aux>
-        <Cockpit
-          title={ this.props.appTitle }
-          showPersons={this.state.showPersons}
-          persons={this.state.persons}
-          clicked={this.togglePersonsHandler}
-          login={this.loginHandler}
-        />
-        { persons }
+        <AuthContext.Provider 
+          value={{
+            authenticated: this.state.authenticated, 
+            login: this.loginHandler
+          }} >
+          <Cockpit
+            title={ this.props.appTitle }
+            showPersons={this.state.showPersons}
+            persons={this.state.persons}
+            clicked={this.togglePersonsHandler}
+          />
+          { persons }
+        </AuthContext.Provider>
       </Aux>
     );
     // return React.createElement('div', {className: 'App'}, React.createElement('p', null, null));
