@@ -15,6 +15,7 @@ const Person = (props) => {
 
     return (
         <Aux>
+            {props.isAuth ? <p>Authenticated!</p> : <p>Please log in</p>}
             <p onClick={ props.click }>
                 I'm a { props.name } and I am { props.age } years old
             </p>

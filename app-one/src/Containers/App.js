@@ -13,7 +13,8 @@ class App extends Component {
         { id: '3', name: "Sophia", age: 22}
       ],
       showPersons: false,
-      changeCounter: 0
+      changeCounter: 0,
+      authenticated: false
   }
 
   nameChangedHandler = (event, id) => {
@@ -51,6 +52,12 @@ class App extends Component {
     this.setState({showPersons: !doesShow});
   }
 
+  loginHandler = () => {
+    this.setState({
+      authenticated: true
+    })
+  }
+
   render() {
     let persons = null;
     if (this.state.showPersons) {
@@ -59,6 +66,7 @@ class App extends Component {
           clicked={ this.deletePersonHandler }
           changed={ this.nameChangedHandler }
           persons={ this.state.persons }
+          isAuthenticated={this.state.authenticated}
         />
       );
     }
@@ -70,6 +78,7 @@ class App extends Component {
           showPersons={this.state.showPersons}
           persons={this.state.persons}
           clicked={this.togglePersonsHandler}
+          login={this.loginHandler}
         />
         { persons }
       </Aux>

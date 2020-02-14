@@ -13,6 +13,7 @@ const persons = (props) => props.persons.map( (person, index) => {
                     change={ (event) => props.changed(event, person.id) }
                     name={ person.name }
                     age={ person.age }
+                    isAuth={props.isAuthenticated}
                     />
             </ErrorBoundary>
         )
