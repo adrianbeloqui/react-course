@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useContext } from 'react'
 
 import classes from './Person.module.css'
 import Aux from '../../Hoc/Aux'
@@ -9,18 +9,16 @@ import AuthContext from '../../../Context/auth-context'
 
 const Person = (props) => {
     const inputElementRef = useRef(null);
+    const authContext = useContext(AuthContext)
 
     useEffect(() => {
         inputElementRef.current.focus()
+        console.log(authContext.authenticated)
     }, [])
 
     return (
         <Aux>
-            <AuthContext.Consumer>
-                {(context) => 
-                    context.authenticated ? <p>Authenticated!</p> : <p>Please log in</p>
-                }
-            </AuthContext.Consumer>
+            {authContext.authenticated ? <p>Authenticated!</p> : <p>Please log in</p>}
             <p onClick={ props.click }>
                 I'm a { props.name } and I am { props.age } years old
             </p>
