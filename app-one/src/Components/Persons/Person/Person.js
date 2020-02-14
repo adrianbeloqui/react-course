@@ -1,11 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useEffect, useRef } from 'react'
 
 import classes from './Person.module.css'
 import Aux from '../../Hoc/Aux'
 import withClass from '../../Hoc/withClass'
 
-const person = (props) => {
+const Person = (props) => {
+    const inputElementRef = useRef(null);
+
+    useEffect(() => {
+        inputElementRef.current.focus()
+    }, [])
+
     return (
         <Aux>
             <p onClick={ props.click }>
@@ -13,6 +20,7 @@ const person = (props) => {
             </p>
             <p>{ props.children }</p>
             <input
+                ref={ inputElementRef }
                 type="text"
                 onChange={ props.change }
                 value={ props.name }
@@ -21,18 +29,18 @@ const person = (props) => {
     )
 }
 
-person.propTypes = {
+Person.propTypes = {
     'click': PropTypes.func,
     'change': PropTypes.func,
     'name': PropTypes.string,
     'age': PropTypes.number
 }
 
-person.defaultTypes = {
+Person.defaultTypes = {
     'click': null,
     'change': null,
     'name': '',
     'age': 0
 }
 
-export default withClass(person, classes.Person);
+export default withClass(Person, classes.Person);
