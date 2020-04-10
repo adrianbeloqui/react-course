@@ -4,7 +4,7 @@ import Layout from './hoc/Layout/Layout'
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder'
 
 
-function App() {
+function App() { 
   return (
     <div>
       <Layout >
