@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import * as actionTypes from '../../store/actions'
+import * as actions from '../../store/actions/index'
 import Aux from '../../hoc/Aux/Aux'
 import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
@@ -16,41 +16,12 @@ class BurgerBuilder extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            purchasing: false,
-            loading: false,
-            error: false
+            purchasing: false
         }
     }
 
     componentDidMount () {
-        // axios.get('/ingredients.json')
-        //     .then( res => {
-        //         if (! res.data ) {
-        //             throw res;
-        //         }
-
-        //         const ingredientsCost = Object.keys(res.data)
-        //             .map( igKey => {
-        //                 return res.data[igKey] * INGREDIENT_PRICES[igKey]
-        //             })
-        //             .reduce( (total, amount) => {
-        //                 return total + amount
-        //             }, 0)
-
-        //         this.setState((previousState) => {
-        //             return {
-        //                 ingredients: res.data,
-        //                 error: false,
-        //                 totalPrice: previousState.totalPrice + ingredientsCost,
-        //                 purchaseable: ingredientsCost > 0
-        //             }
-        //         })
-        //     })
-        //     .catch( err => {
-        //         this.setState({
-        //             error: true
-        //         })
-        //     })
+        this.props.onInitIngredients()
     }
 
     purchaseCancelHandler = () => {
@@ -66,6 +37,7 @@ class BurgerBuilder extends Component {
     }
 
     purchaseContinueHandler = () => {
+        this.props.onInitPurchase()
         this.props.history.push('/checkout')
     }
 
@@ -92,7 +64,7 @@ class BurgerBuilder extends Component {
         }
 
         let orderSummary = null
-        let burger = this.state.error ? <p>Ingredients can't be loaded</p> : <Spinner />;
+        let burger = this.props.error ? <p>Ingredients can't be loaded</p> : <Spinner />;
         
         if (this.props.ings) {
             burger = (
@@ -118,10 +90,6 @@ class BurgerBuilder extends Component {
             )
         }
 
-        if (this.state.loading) {
-            orderSummary = <Spinner />
-        }
-
         return (
             <Aux>
                 <Modal show={ this.state.purchasing } modalClosed={ this.purchaseCancelHandler }>
@@ -135,15 +103,18 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = state => {
     return {
-        ings: state.ingredients,
-        price: state.totalPrice
+        ings: state.burgerBuilder.ingredients,
+        price: state.burgerBuilder.totalPrice,
+        error: state.burgerBuilder.error
     }
 }
 
 const dispatchToProps = dispatch => {
     return {
-        onIngredientAdded: (igName) => dispatch({type: actionTypes.ADD_INGREDIENT, ingredientName: igName}),
-        onIngredientRemoved: (igName) => dispatch({type: actionTypes.REMOVE_INGREDIENT, ingredientName: igName})
+        onIngredientAdded: (igName) => dispatch(actions.addIngredient(igName)),
+        onIngredientRemoved: (igName) => dispatch(actions.removeIngredient(igName)),
+        onInitIngredients: () => dispatch(actions.initIngredients()),
+        onInitPurchase: () => dispatch(actions.purchaseInit())
     }
 }
 
