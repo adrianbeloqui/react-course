@@ -1,5 +1,10 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Requires an API KEY
+
+Add a file under src/store and call it config.js
+Export a constant called `API_KEY` with your Firebase API key.
+
 ## Available Scripts
 
 In the project directory, you can run:
